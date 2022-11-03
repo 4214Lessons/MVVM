@@ -27,7 +27,6 @@ public partial class App : Application
 
 
 
-        /*
         // IoC container
 
         var builder = new ContainerBuilder();
@@ -36,7 +35,6 @@ public partial class App : Application
         builder.RegisterType<FakeCarRepository>().As<ICarRepository>().SingleInstance();
 
         var container = builder.Build();
-        */
 
 
 
