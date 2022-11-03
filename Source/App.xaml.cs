@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Autofac;
+using Microsoft.Extensions.Configuration;
 using Source.Repositories.Abstracts;
 using Source.Repositories.Concretes;
 using Source.ViewModels;
@@ -11,6 +12,7 @@ public partial class App : Application
 {
     protected override void OnStartup(StartupEventArgs e)
     {
+        /*
         IConfiguration configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .Build();
@@ -20,16 +22,33 @@ public partial class App : Application
         var conStr = configuration.GetConnectionString("myConStr1");
         MessageBox.Show(key);
         MessageBox.Show(conStr);
+        */
+
+
+
+
+        /*
+        // IoC container
+
+        var builder = new ContainerBuilder();
+
+        builder.RegisterType<MainViewModel>().AsSelf();
+        builder.RegisterType<FakeCarRepository>().As<ICarRepository>().SingleInstance();
+
+        var container = builder.Build();
+        */
 
 
 
 
 
-        ICarRepository _carRepository = new FakeCarRepository();
-        MainViewModel mainViewModel = new(_carRepository);
+
+
+
+
 
         MainView mainView = new();
-        mainView.DataContext = mainViewModel;
+        mainView.DataContext = container.Resolve<MainViewModel>();
 
 
 
