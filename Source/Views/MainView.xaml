@@ -3,43 +3,31 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Source.Views" 
-        xmlns:ViewModels="clr-namespace:Source.ViewModels"
+        xmlns:view="clr-namespace:Source.Views" 
+        xmlns:viewModels="clr-namespace:Source.ViewModels"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="MVVM" Height="450" Width="800" WindowStartupLocation="CenterScreen">
 
-    <!--<StackPanel>
-        <TextBox/>
+
+    <ContentControl  Content="{Binding CurrentViewModel}">
+       
         
-        <Button 
-            Command="{Binding ShowCommand}"
-            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-            Content="Show"/>
-    </StackPanel>-->
+        <ContentControl.Resources>
+            <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
+                <view:HomeView/>
+            </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModels:UpdateViewModel}">
+                <view:UpdateView/>
+            </DataTemplate>
 
-    <!--<Window.DataContext>
-        <ViewModels:MainViewModel></ViewModels:MainViewModel>
-    </Window.DataContext>-->
-
-
-
-    <StackPanel HorizontalAlignment="Center">
-        <ComboBox SelectedItem="{Binding SelectedCar}" ItemsSource="{Binding Cars}" DisplayMemberPath="Model"></ComboBox>
+            <DataTemplate DataType="{x:Type viewModels:AddViewModel}">
+                <view:AddView/>
+            </DataTemplate>
+        </ContentControl.Resources>
         
-        <TextBlock Text="Make"/>
-        <TextBlock Text="{Binding SelectedCar.Make}"/>
-        <TextBlock Text="Model"/>
-        <TextBlock Text="{Binding SelectedCar.Model}"/>
-        <TextBlock Text="Year"/>
-        <TextBlock Text="{Binding SelectedCar.Year}"/>
+        
+    </ContentControl>
 
-        <StackPanel Orientation="Horizontal">
-            <Button Command="{Binding ShowCommand}" Content="Show"/>
-            <Button Command="{Binding AddCommand}" Content="Add"/>
-            <Button Command="{Binding UpdateCommand}" Content="Update"/>
-            <Button Command="{Binding DeleteCommand}" Content="Delete"/>
-        </StackPanel>
-    </StackPanel>
 
 </Window>

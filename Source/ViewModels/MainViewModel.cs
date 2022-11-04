@@ -1,42 +1,18 @@
-﻿using Source.Command;
-using Source.Models;
-using Source.Repositories.Abstracts;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
+﻿using Source.Stores;
 
 namespace Source.ViewModels;
 
-public class MainViewModel
+public class MainViewModel : BaseViewModel
 {
-    private readonly ICarRepository _carRepository;
+    private readonly NavigationStore _navigationStore;
+    public BaseViewModel? CurrentViewModel => _navigationStore.CurrentViewModel;
 
-
-    public ObservableCollection<Car> Cars { get; set; }
-    public Car? SelectedCar { get; set; }
-
-
-    public ICommand ShowCommand { get; set; }
-    // public ICommand AddCommand { get; set; }
-    // public ICommand UpdateCommand { get; set; }
-    // public ICommand DeleteCommand { get; set; }
-
-
-
-    public MainViewModel(ICarRepository carRepository)
+    public MainViewModel(NavigationStore navigationStore)
     {
-        _carRepository = carRepository;
-        Cars = new(_carRepository.GetList() ?? new List<Car>());
-
-        ShowCommand = new RelayCommand(ExecuteShowCommand, CanExecuteShowCommand);
+        _navigationStore = navigationStore;
+        navigationStore.CurrentViewModelChanged += NavigationStore_CurrentViewModelChanged;
     }
 
-    void ExecuteShowCommand(object? parameter)
-        => MessageBox.Show(SelectedCar?.Model);
-
-
-    bool CanExecuteShowCommand(object? parameter)
-        => SelectedCar is not null;
-
+    private void NavigationStore_CurrentViewModelChanged()
+     => NotifyPropertyChanged(nameof(CurrentViewModel));
 }

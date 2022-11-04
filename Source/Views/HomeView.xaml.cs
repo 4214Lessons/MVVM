@@ -2,9 +2,9 @@
 
 namespace Source.Views;
 
-public partial class UpdateView : UserControl
+public partial class HomeView : UserControl
 {
-    public UpdateView()
+    public HomeView()
     {
         InitializeComponent();
     }
